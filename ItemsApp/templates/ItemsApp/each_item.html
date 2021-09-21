@@ -1,0 +1,37 @@
+{% extends 'ItemsApp/home.html' %}
+{% block content1 %}
+{% endblock content1 %}
+{% block content %}
+<div class="one-product">
+    <img class="prview" src= "{{Each_Item.Picture.url}}">
+    <div class="details">
+        {% if Each_Item.Is_New_Arrival %}    
+            <p class="status">NEW ARRIVAL</p>
+        {% endif %}
+            <p class = 'product-name'>{{Each_Item}}</p>
+            <p class = 'p-desc'>{{Each_Item.Description}}</p>
+            {% if user.is_authenticated and user.wholesaleuser.is_wholesalecustomer %}
+            <p class="wp">Whole-Sale Price: <span>&#8377;{{Each_Item.WholeSale_Price}}</span></p>
+            <p class="wp">Retail Price: <span>&#8377;{{Each_Item.Retail_Price}}</span></p>
+            {% else %}
+            <p class="pprice">Price: <span>&#8377;{{Each_Item.Retail_Price}}</span></p>
+            {% endif %}
+            <div class="two-btn">
+            <input type="submit" class='share-btn' value="Share now" onclick='shareLink()'>
+            {% if user.is_authenticated %}
+                {% if flag %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Added to cart" id="Del" name="Del" class="rmcart-btn">
+                    </form>
+                {% else %}
+                    <form method="POST">
+                        {% csrf_token %}
+                            <input type="submit" value="Add to cart" id="Add" name="Add" class="cart-btn">
+                    </form>
+                {% endif %}
+            {% endif %}
+            </div>
+    </div>
+</div>
+{% endblock content %}

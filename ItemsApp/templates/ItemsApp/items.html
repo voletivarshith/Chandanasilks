@@ -1,0 +1,28 @@
+{% extends "ItemsApp/home.html" %}
+{% block content1 %}
+<div class="heady">
+    <h4>{{Item_type.Item_type}}</h4>
+        <div class="dropdown">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                Sort by
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="{% url 'ascending-item' Item_types=It %}">Price: Low to high</a></li>
+                <li><a class="dropdown-item" href="{% url 'descending-item' Item_types=It %}">Price: high to low</a></li>
+            </ul>
+        </div>
+</div>
+{% endblock content1 %}
+{% block content %}
+    {% for i in Items %}
+        <div class="col-lg-3">
+        <img class="pimage" src= "{{i.Picture.url}}">
+        {% if i.Is_new_arrival %}
+            <p class = 'newa'>NEW ARRIVAL</p>
+        {% endif %}
+        <a class = 'pname' href="{% url 'each-item' Item_type=i.Item_type Each_Item=i.Item_Name %}">{{i}}</a>
+        <p class = 'price'>&#8377;{{i.Retail_Price}}</p>
+        </div>
+{% endfor %}
+{% endblock content %}

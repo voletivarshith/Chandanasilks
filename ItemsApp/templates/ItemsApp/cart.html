@@ -1,0 +1,24 @@
+{% extends "ItemsApp/home.html" %}
+{% load static %}  
+{% block content1 %}
+<h4>Your Shopping Bag</h4>
+{% endblock content1 %}
+{% block content %}
+{% if Cart_Items %}
+    {% for i in Cart_Items %}
+        <div class="col-lg-3 col-sm-3">
+            <img src="{{i.Item_Id.Picture.url}}" class='pimage' alt="">
+            <a class = "pname" href="{% url 'each-item' Item_type=i.Item_Id.Item_type Each_Item=i.Item_Id.Item_Name %}">{{i}}</a>
+            <p class = 'price'>&#8377;{{i.Item_Id.Retail_Price}}</p>
+            <a class="remove-item" href= "{% url 'Delete' Each_item=i.Item_Id.Item_Name %}"><i class="fa fa-times-circle" aria-hidden="true"></i>
+                Remove Item</a>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <img src="{% static 'ItemsApp/empty-cart.png' %}" class="empty-bag">
+        </div>
+    </div>
+{% endif %}
+{% endblock content %}
